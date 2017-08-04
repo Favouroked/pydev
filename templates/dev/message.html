@@ -1,0 +1,10 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    <form role="form" id="message_form" method="post"
+          action="{% url 'message' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br/>
+    <button type="submit" name="submit">Send</button>
+    </form>
+{% endblock %}
