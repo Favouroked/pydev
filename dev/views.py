@@ -53,10 +53,11 @@ def update_profile(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save(commit=True)
+            form.user = request.user
+            form.save()
             return redirect('/')
     else:
-        form = UserProfileForm()
+        form = UserProfileForm(instance=request.user)
     return render(request, 'dev/profile.html', {'form': form})
 
 def show_profile(request, username):

@@ -5,14 +5,19 @@
 {% block body_block %}
 {% endblock %}
 {% if user.is_authenticated %}
-    <a href="{% url 'message' %}">Message</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    <a href="{% url 'users' %}">People</a>
-    <a href="{% url 'profile_reg' %}">Update Profile</a>
-    <a href="{% url 'show_profile' user.username %}">Show Profile</a>
+    <hr/>
+    <ul>
+    <li><a href="{% url 'message' %}">Message</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'users' %}">People</a></li>
+    <li><a href="{% url 'profile_reg' %}">Update Profile</a></li>
+    <li><a href="{% url 'show_profile' user.username %}">Show Profile</a></li>
+    </ul>
 {% else %}
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'signup' %}">Sign UP</a>
+    <ul>
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'signup' %}">Sign UP</a></li>
+    </ul>
 {% endif %}
 </body>
 </html>

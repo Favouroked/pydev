@@ -14,7 +14,7 @@ class Message(models.Model):
         return self.subject
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User)
     gender = models.CharField(max_length=6, null=True)
     email = models.EmailField(null=True)
     location = models.CharField(max_length=200, null=True)

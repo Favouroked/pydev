@@ -24,6 +24,17 @@ class SignUpForm(UserCreationForm):
                   'password1', 'password2')
 
 class UserProfileForm(forms.ModelForm):
+    website = forms.URLField(max_length=128, help_text="Enter your website")
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        website = cleaned_data.get('website')
+        if website and not website.startswith('http://'):
+            website = 'http://' + website
+            cleaned_data['website'] = website
+
+            return cleaned_data
+
     class Meta:
         model = UserProfile
         exclude = ('user',)
