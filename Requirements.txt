@@ -1,0 +1,4 @@
+Requirements:
+1) Django 1.9.6
+2) Pillow 3.3.0
+3) Python 2.7.12
