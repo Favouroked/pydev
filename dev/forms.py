@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from dev.models import Message
+from dev.models import Message, UserProfile
 
 class MessageForm(forms.ModelForm):
     subject = forms.CharField(max_length=128, help_text="Enter the subject of the message")
@@ -22,3 +22,8 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email',
                   'password1', 'password2')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)

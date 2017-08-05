@@ -1,0 +1,10 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    {% if users %}
+        {% for person in users %}
+            <ul>
+            <li>{{ person.username }}</li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

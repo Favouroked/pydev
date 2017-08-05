@@ -1,0 +1,10 @@
+{% extends "dev/base.html" %}
+{% block body_block %}
+    <form role="form" id="profile_form" method="post" enctype="multipart/form-data"
+          action="{% url 'profile_reg' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br/>
+    <button type="submit" name="submit">Upload</button>
+    </form>
+{% endblock %}

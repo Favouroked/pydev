@@ -1,0 +1,11 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    <ul>
+    <li>{{ user.username }}</li>
+    <li>{{ profile.email }}</li>
+    <li>{{ profile.location }}</li>
+    <li>{{ profile.school }}</li>
+    <li>{{ profile.website }}</li>
+    <li><img src="/media/{{ profile.picture }}"> </li>
+    </ul>
+{% endblock %}

@@ -15,7 +15,11 @@ class Message(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    website = models.URLField(blank=True)
+    gender = models.CharField(max_length=6, null=True)
+    email = models.EmailField(null=True)
+    location = models.CharField(max_length=200, null=True)
+    school = models.CharField(max_length=50, null=True)
+    website = models.URLField(blank=True, null=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):

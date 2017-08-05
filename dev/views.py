@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from dev.forms import MessageForm, SignUpForm
-from dev.models import Message
+from dev.forms import MessageForm, SignUpForm, UserProfileForm
+from dev.models import Message, UserProfile
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -43,3 +44,22 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'dev/signup.html', {'form': form})
+def user_list(request):
+    the_list = User.objects.all()
+    context_dict = {"users": the_list}
+    return render(request, "dev/people.html", context_dict)
+
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/')
+    else:
+        form = UserProfileForm()
+    return render(request, 'dev/profile.html', {'form': form})
+
+def show_profile(request, username):
+    user = User.objects.get(username=username)
+    prof = UserProfile.objects.get(user=user)
+    return render(request, 'dev/show_profile.html', {"profile": prof, "user": user})
