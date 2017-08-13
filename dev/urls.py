@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^show_profile/(?P<username>[a-zA-Z0-9]+)$', views.show_profile, name='show_profile'),
     url(r'^status/$', views.status, name='status'),
     url(r'^upload_status/$', views.upload_status, name='upload_status'),
+    url(r'^send_msg/$', views.send_discus, name='send_msg'),
+    url(r'^show_msg/$', views.show_discus, name='show_msg'),
 ]

@@ -26,8 +26,17 @@ class UserProfile(models.Model):
         return self.user.username
 class Status(models.Model):
     uploader = models.CharField(max_length=50)
-    status = models.TextField()
+    status = models.CharField(max_length=200)
     stat_pic = models.ImageField(upload_to='status_images', blank=True)
+    stat_id = models.IntegerField(default=0)
 
     def __str__(self):
         return self.uploader
+
+class Discussion(models.Model):
+    sender = models.CharField(max_length=50)
+    msg = models.CharField(max_length=200)
+    msg_pic = models.ImageField(upload_to='group_pic', blank=True)
+
+    def __str__(self):
+        return self.sender

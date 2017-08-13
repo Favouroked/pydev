@@ -1,0 +1,21 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    {% if msg %}
+        {% for m in msg %}
+            <ul>
+            <li>{{ m.sender }}: {{ m.msg }}<br>
+            {% if m.msg_pic %}
+                <img src="/media/{{ m.msg_pic }}">
+            {% endif %}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No messages yet</p><br>
+    {% endif %}
+    <form role="form" id="discuss_form" method="post" enctype="multipart/form-data"
+              action="{% url 'send_msg' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="submit">Send</button>
+    </form>
+{% endblock %}

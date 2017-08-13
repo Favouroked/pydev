@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from dev.models import Message, UserProfile, Status
+from dev.models import Message, UserProfile, Status, Discussion
 
 class MessageForm(forms.ModelForm):
     subject = forms.CharField(max_length=128, help_text="Enter the subject of the message")
@@ -44,4 +44,11 @@ class StatusForm(forms.ModelForm):
 
     class Meta:
         model = Status
-        exclude = ('uploader',)
+        exclude = ('uploader', 'stat_id',)
+
+class DiscussionForm(forms.ModelForm):
+    msg_pic = forms.ImageField(required=False)
+
+    class Meta:
+        model = Discussion
+        exclude = ('sender',)

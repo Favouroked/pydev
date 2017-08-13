@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from dev.forms import MessageForm, SignUpForm, UserProfileForm, StatusForm
-from dev.models import Message, UserProfile, Status
+from dev.forms import MessageForm, SignUpForm, UserProfileForm, StatusForm, DiscussionForm
+from dev.models import Message, UserProfile, Status, Discussion
 from django.contrib.auth.models import User
 
 # Create your views here.
+
 def index(request):
     user = request.user
     context_dict = {}
@@ -68,19 +69,43 @@ def show_profile(request, username):
 
 def status(request):
     status = Status.objects.all()
-    context_dict = {"status": status}
+    form = StatusForm()
+    context_dict = {"status": status, 'form': form}
     return render(request, "dev/status.html", context_dict)
 
 def upload_status(request):
+    status_id = 0
     if request.method == 'POST':
         form = StatusForm(request.POST, request.FILES)
         if form.is_valid():
+            status_id += 1
             stat = form.save(commit=False)
             stat.uploader = request.user.username
+            stat.stat_id = status_id
             stat.save()
-            return redirect('/')
+            return redirect('/dev/status/')
         else:
             print(form.errors)
     else:
         form = StatusForm()
     return render(request, 'dev/upload_status.html', {'form': form})
+
+def send_discus(request):
+    if request.method == 'POST':
+        form = DiscussionForm(request.POST, request.FILES)
+        if form.is_valid():
+            dis = form.save(commit=False)
+            dis.sender = request.user.username
+            dis.save()
+            return redirect('/dev/show_msg/')
+        else:
+            print(form.errors)
+    else:
+        form = DiscussionForm()
+    return render(request, 'dev/discussion.html', {'form': form})
+
+def show_discus(request):
+    msg = Discussion.objects.all()
+    form = DiscussionForm()
+    context_dict = {'msg': msg, 'form': form}
+    return render(request, 'dev/discussion.html', context_dict)
