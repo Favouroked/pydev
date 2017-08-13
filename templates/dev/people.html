@@ -3,7 +3,7 @@
     {% if users %}
         {% for person in users %}
             <ul>
-            <li>{{ person.username }}</li>
+            <li><a href="{% url 'show_profile' person.username %}">{{ person.username }}</a></li>
             </ul>
         {% endfor %}
     {% endif %}

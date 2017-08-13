@@ -24,3 +24,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+class Status(models.Model):
+    uploader = models.CharField(max_length=50)
+    status = models.TextField()
+    stat_pic = models.ImageField(upload_to='status_images', blank=True)
+
+    def __str__(self):
+        return self.uploader

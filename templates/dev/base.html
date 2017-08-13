@@ -12,6 +12,8 @@
     <li><a href="{% url 'users' %}">People</a></li>
     <li><a href="{% url 'profile_reg' %}">Update Profile</a></li>
     <li><a href="{% url 'show_profile' user.username %}">Show Profile</a></li>
+    <li><a href="{% url 'status' %}">Status Updates</a></li>
+    <li><a href="{% url 'upload_status' %}">Upload Status</a></li>
     </ul>
 {% else %}
     <ul>

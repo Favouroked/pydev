@@ -1,0 +1,13 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    {% if status %}
+        {% for stat in status %}
+            <ul>
+            <li>{{ stat.uploader }}: {{ stat.status }}<br>
+            <img src="/media/{{ stat.stat_pic }}"></li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No status to display</p>
+    {% endif %}
+{% endblock %}

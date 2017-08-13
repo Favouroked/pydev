@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from dev.forms import MessageForm, SignUpForm, UserProfileForm
-from dev.models import Message, UserProfile
+from dev.forms import MessageForm, SignUpForm, UserProfileForm, StatusForm
+from dev.models import Message, UserProfile, Status
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -51,10 +51,11 @@ def user_list(request):
 
 def update_profile(request):
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        form = UserProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            form.user = request.user
-            form.save()
+            k = form.save(commit=False)
+            k.user = request.user
+            k.save()
             return redirect('/')
     else:
         form = UserProfileForm(instance=request.user)
@@ -64,3 +65,22 @@ def show_profile(request, username):
     user = User.objects.get(username=username)
     prof = UserProfile.objects.get(user=user)
     return render(request, 'dev/show_profile.html', {"profile": prof, "user": user})
+
+def status(request):
+    status = Status.objects.all()
+    context_dict = {"status": status}
+    return render(request, "dev/status.html", context_dict)
+
+def upload_status(request):
+    if request.method == 'POST':
+        form = StatusForm(request.POST, request.FILES)
+        if form.is_valid():
+            stat = form.save(commit=False)
+            stat.uploader = request.user.username
+            stat.save()
+            return redirect('/')
+        else:
+            print(form.errors)
+    else:
+        form = StatusForm()
+    return render(request, 'dev/upload_status.html', {'form': form})

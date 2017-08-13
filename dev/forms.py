@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from dev.models import Message, UserProfile
+from dev.models import Message, UserProfile, Status
 
 class MessageForm(forms.ModelForm):
     subject = forms.CharField(max_length=128, help_text="Enter the subject of the message")
@@ -24,7 +24,7 @@ class SignUpForm(UserCreationForm):
                   'password1', 'password2')
 
 class UserProfileForm(forms.ModelForm):
-    website = forms.URLField(max_length=128, help_text="Enter your website")
+    website = forms.URLField(max_length=128, help_text="Enter your website", required=False)
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -38,3 +38,10 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user',)
+
+class StatusForm(forms.ModelForm):
+    stat_pic = forms.ImageField(required=False)
+
+    class Meta:
+        model = Status
+        exclude = ('uploader',)

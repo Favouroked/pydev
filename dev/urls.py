@@ -7,4 +7,6 @@ urlpatterns = [
     url(r'^people/$', views.user_list, name='users'),
     url(r'^profilereg/$', views.update_profile, name='profile_reg'),
     url(r'^show_profile/(?P<username>[a-zA-Z0-9]+)$', views.show_profile, name='show_profile'),
+    url(r'^status/$', views.status, name='status'),
+    url(r'^upload_status/$', views.upload_status, name='upload_status'),
 ]
