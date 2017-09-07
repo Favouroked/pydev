@@ -1,9 +1,24 @@
 {% extends 'dev/base.html' %}
 {% block body_block %}
+    {% if both_msg %}
+        {% for ms in both_msg %}
+            <ul><li>{{ ms.sender }}: {{ ms.message }}<br>{{ ms.datetime }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h4>You do not have any message with this guy</h4>
+    {% endif %}
     <form role="form" id="message_form" method="post"
-          action="{% url 'message' %}">
+          action="{% url 'send_message' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text }}
+        {{ field }}
+    {% endfor %}
     <br/>
     <button type="submit" name="submit">Send</button>
     </form>

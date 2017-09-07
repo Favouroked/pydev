@@ -1,4 +1,5 @@
 {% extends 'dev/base.html' %}
+{% load bootstrap_toolkit %}
 {% block body_block %}
     {% if msg %}
         {% for m in msg %}
@@ -6,7 +7,8 @@
             <li>{{ m.sender }}: {{ m.msg }}<br>
             {% if m.msg_pic %}
                 <img src="/media/{{ m.msg_pic }}">
-            {% endif %}</li>
+            {% endif %}
+            {{ m.datetime }}</li>
             </ul>
         {% endfor %}
     {% else %}
@@ -15,7 +17,7 @@
     <form role="form" id="discuss_form" method="post" enctype="multipart/form-data"
               action="{% url 'send_msg' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="submit">Send</button>
+        {{ form|as_bootstrap }}
+        <button type="submit" name="submit" class="btn btn-primary">Send</button>
     </form>
 {% endblock %}

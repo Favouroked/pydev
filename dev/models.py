@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Message(models.Model):
-    subject = models.CharField(max_length=128)
-    sender = models.CharField(max_length=128, unique=True)
-    reciever = models.ForeignKey(User)
-    message = models.TextField(default="Hello")
+    sender = models.CharField(max_length=128)
+    reciever = models.CharField(max_length=128)
+    message = models.CharField(max_length=500)
+    datetime = models.DateTimeField(null=True)
 
     def __str__(self):
-        return self.subject
+        return self.sender
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User)
@@ -37,6 +37,7 @@ class Discussion(models.Model):
     sender = models.CharField(max_length=50)
     msg = models.CharField(max_length=200)
     msg_pic = models.ImageField(upload_to='group_pic', blank=True)
+    datetime = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.sender

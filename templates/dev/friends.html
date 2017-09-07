@@ -1,0 +1,10 @@
+{% extends 'dev/base.html' %}
+{% block body_block %}
+    {% if friends %}
+        {% for f in friends %}
+            <ul>
+            <li><a href="{% url 'message' f.username %}">{{ f.username }}</a> </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

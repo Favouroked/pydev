@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head><title>WelCome</title></head>
+<head><title>WelCome</title>
+<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet"></head>
 <body>
 {% block body_block %}
 {% endblock %}
 {% if user.is_authenticated %}
     <hr/>
     <ul>
-    <li><a href="{% url 'message' %}">Message</a></li>
+    <li><a href="{% url 'friends' %}">Message</a></li>
     <li><a href="{% url 'logout' %}">Logout</a></li>
     <li><a href="{% url 'users' %}">People</a></li>
     <li><a href="{% url 'profile_reg' %}">Update Profile</a></li>

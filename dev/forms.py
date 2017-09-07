@@ -4,14 +4,12 @@ from django.contrib.auth.forms import UserCreationForm
 from dev.models import Message, UserProfile, Status, Discussion
 
 class MessageForm(forms.ModelForm):
-    subject = forms.CharField(max_length=128, help_text="Enter the subject of the message")
-    reciever = forms.ModelChoiceField(User.objects.all())
-    sender = forms.CharField(max_length=128, widget=forms.HiddenInput(), required=False)
-    message = forms.TextInput()
+    sender = forms.CharField(widget=forms.HiddenInput)
+    reciever = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:
         model = Message
-        fields = ('subject', 'message')
+        exclude = ('datetime',)
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text="Optional")
@@ -51,4 +49,4 @@ class DiscussionForm(forms.ModelForm):
 
     class Meta:
         model = Discussion
-        exclude = ('sender',)
+        exclude = ('sender', 'datetime',)
