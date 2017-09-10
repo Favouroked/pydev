@@ -1,12 +1,22 @@
 {% extends 'dev/base.html' %}
+{% block head_block %}
+    <style>
+    .jump {
+        margin-left: 50%;
+    }
+    </style>
+{% endblock %}
 {% block body_block %}
     {% if both_msg %}
         {% for ms in both_msg %}
-            <ul><li>{{ ms.sender }}: {{ ms.message }}<br>{{ ms.datetime }}</li>
-            </ul>
+            {% if ms.sender == me %}
+                <div class="jump"><ul><li>Me: {{ ms.message }}<br>{{ ms.datetime }}</li></ul></div>
+            {% else %}
+                <ul><li>{{ ms.sender }}: {{ ms.message }}<br>{{ ms.datetime }}</li></ul>
+            {% endif %}
         {% endfor %}
     {% else %}
-        <h4>You do not have any message with this guy</h4>
+        <p>You do not have any message with this person</p>
     {% endif %}
     <form role="form" id="message_form" method="post"
           action="{% url 'send_message' %}">

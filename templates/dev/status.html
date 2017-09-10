@@ -1,11 +1,12 @@
 {% extends 'dev/base.html' %}
+{% load bootstrap_toolkit %}
 {% block body_block %}
     <h3>Upload your own status</h3>
     <form role="form" id="status_form" method="post" enctype="multipart/form-data"
           action="{% url 'upload_status' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" name="submit">Upload</button>
+    <button type="submit" name="submit" class="btn btn-primary">Upload</button>
     </form>
     <hr>
     {% if status %}
@@ -13,7 +14,7 @@
             <ul>
             <li>{{ stat.uploader }}: {{ stat.status }}<br>
             {% if stat.stat_pic %}
-                <img src="/media/{{ stat.stat_pic }}">
+                <img src="/media/{{ stat.stat_pic }}" class="img-circle" alt="Hmm" width="304" height="236">
             {% endif %}</li>
             </ul>
         {% endfor %}

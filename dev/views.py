@@ -4,6 +4,7 @@ from dev.forms import MessageForm, SignUpForm, UserProfileForm, StatusForm, Disc
 from dev.models import Message, UserProfile, Status, Discussion
 from django.contrib.auth.models import User
 import datetime
+from django.db.models import Q
 
 # Create your views here.
 
@@ -51,61 +52,15 @@ def show_profile(request, username):
     prof = UserProfile.objects.get(user=user)
     return render(request, 'dev/show_profile.html', {"profile": prof, "user": user})
 
-# def message_list(request, username):
-#     user = User.objects.get(username=username)
-#     form = MessageForm(initial={"reciever": user})
-#     user = User.objects.get(username=username)
-#     try:
-#         message = Message.objects.get(reciever=user)
-#     except Message.DoesNotExist:
-#         return render(request, 'dev/message.html', {'form': form})
-#     template = 'dev/message.html'
-#
-#     return render(request, template, {'message': message, "form": form})
-#
-# def send_message(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('reciever')
-#         form = MessageForm(request.POST)
-#         if form.is_valid():
-#             msg = form.save(commit=False)
-#             msg.sender = request.user.username
-#             msg.save()
-#             return redirect('/dev/message/username')
-#         else:
-#             print(form.errors)
 
 def message_list(request, username):
-    msglist = []
     sender = request.user.username
     form = MessageForm(initial={"reciever": username, "sender": sender})
-    msg = {}
     context_dict = {'form': form}
     template = 'dev/message.html'
-    try:
-        sent = Message.objects.filter(reciever=username).filter(sender=sender).order_by('datetime')
-        msg['sent'] = sent
-        print "This has sent"
-    except Message.DoesNotExist:
-        print "This did not send"
-    try:
-        recieved = Message.objects.filter(reciever=sender, sender=username).order_by('datetime')
-        msg['recieved'] = recieved
-        print "This has recieved"
-    except Message.DoesNotExist:
-        pass
-    for i in msg['sent']:
-        msglist.append(i)
-    for i in msg['recieved']:
-        msglist.append(i)
-    swaped = True
-    while swaped:
-        swaped = False
-        for i in range(len(msglist)-1):
-            if msglist[i].datetime > msglist[i+1].datetime:
-                msglist[i], msglist[i+1] = msglist[i+1], msglist[i]
-                swaped = True
-    context_dict['both_msg'] = msglist
+    messages = Message.objects.filter(Q(sender=sender) | Q(sender=username)).filter(Q(reciever=username) | Q(reciever=sender)).order_by('datetime')
+    context_dict['both_msg'] = messages
+    context_dict['me'] = sender
     return render(request, template, context_dict)
 
 
